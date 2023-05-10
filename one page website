@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Одностраничный сайт</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<header>
+		<h1>Заголовок</h1>
+		<nav>
+			<ul>
+				<li><a href="#section1">Секция 1</a></li>
+				<li><a href="#section2">Секция 2</a></li>
+				<li><a href="#section3">Секция 3</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main>
+		<section id="section1">
+			<h2>Секция 1</h2>
+			<p>Текст секции 1</p>
+		</section>
+
+		<section id="section2">
+			<h2>Секция 2</h2>
+			<p>Текст секции 2</p>
+		</section>
+
+		<section id="section3">
+			<h2>Секция 3</h2>
+			<p>Текст секции 3</p>
+		</section>
+	</main>
+
+	<footer>
+		<p>Копирайт &copy; 2023</p>
+	</footer>
+
+	<script src="script.js"></script>
+</body>
+</html>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+header {
+	background-color: #333;
+	color: #fff;
+	padding: 20px;
+}
+
+nav ul {
+	list-style: none;
+	display: flex;
+	justify-content: space-between;
+}
+
+nav ul li {
+	margin-right: 20px;
+}
+
+nav ul li:last-child {
+	margin-right: 0;
+}
+
+nav a {
+	color: #fff;
+	text-decoration: none;
+}
+
+main {
+	padding: 50px;
+}
+
+section {
+	margin-bottom: 50px;
+}
+
+h2 {
+	margin-bottom: 20px;
+}
+
+footer {
+	background-color: #333;
+	color: #fff;
+	padding: 20px;
+	text-align: center;
+}
+const navLinks = document.querySelectorAll('nav a');
+const sections = document.querySelectorAll('section');
+
+navLinks.forEach(link => {
+	link.addEventListener('click', () => {
+		const targetSectionId = link.getAttribute('href');
+		const targetSection = document.querySelector(targetSectionId);
+
+		window.scrollTo({
+			top: targetSection.offsetTop,
+			behavior: 'smooth'
+		});
+	});
+});
+
+window.addEventListener('scroll', () => {
+	const currentPos = window.pageYOffset;
+
+	sections.forEach(section => {
+		const sectionTop = section.offsetTop;
+		const sectionHeight = section.offsetHeight;
+
+		if (currentPos >= sectionTop && currentPos < sectionTop + sectionHeight) {
+			navLinks.forEach(link => {
+				link.classList.remove('active');
+			});
+
+			const correspondingLink = document.querySelector(`nav a[href="#${section.id}"]`);
+			correspondingLink.classList.add('active');
+		}
+	});
+});
